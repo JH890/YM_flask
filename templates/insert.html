@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>YM-Insert</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/insert_style.css')}}">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+    <header>
+<!--        <center>-->
+<!--            <div id="header_content">연산메탈 AI Detector... [TEST UI]</div>-->
+            <nav id="header_nav">
+                  <ul>
+<!--                        <li><a href="dashboard">Dashboard</a></li>-->
+<!--                        <li><a href="">Result</a></li>-->
+                        <li class="active"><a href="insert">Insert</a></li>
+                  </ul>
+            </nav>
+<!--        </center>-->
+    </header>
+
+<!--    <div id="container_line_start"><hr></div>-->
+    <center>
+        <div id="container_insert">
+            <div id="container_insert_line"></div>
+            <center>
+                <h3>[{{date}}] 검사 항목 추가</h3>
+            </center>
+            <center>
+                <form role="form" style="width:700px" action="/insert_insert" method="post">
+                    <input id="input_number" style="text-align:center" type="number" name="value_number"
+                           placeholder="순번" class="form-control" autocomplete="off" value={{last_Data}} readonly>
+                    <input id="input_model" type="text" name = "value_model"
+                           placeholder="검사 항목" class="form-control" autocomplete="off">
+                    <button id="btn_insert" type="submit" name ="insert" value="insert">추가</button>
+                </form>
+                <table class="type10">
+                    <tr>
+                        <th scope="cols">순번</th>
+                        <th scope="cols">검사 항목</th>
+                    </tr>
+                    {% for data in select_Data %}
+                    <tr>
+                        <td scope="row" style="width: 100px;">{{data.number}}</td>
+                        <td style="width: 500px;">{{data.model}}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                <div id="container_delete">
+                    <form role="form"  style="float:right" action="/insert_delete">
+                    <button id="btn_delete" type="submit" name ="delete">초기화</button>
+                    </form>
+                </div>
+            </center>
+        </div>
+    </center>
+    <footer>
+        <center>
+            <div id="footer_content">copyrightⓒ 2022 All rights reserved by ADIA Lab. Inc.</div>
+        </center>
+    </footer>
+</body>

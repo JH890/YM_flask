@@ -1,0 +1,153 @@
+input {
+    height: 48px;
+    font-size: 1.2em;
+    border: 0;
+    border-radius: 10px;
+    outline: none;
+    padding-left: 10px;
+    background-color: #FFFFFF;
+}
+
+#container_insert {
+    margin-top: 200px;
+    width: 80%;
+    background-color: #f4f5f9;
+    border-radius: 10px;
+    padding-bottom: 70px;
+    padding-top: 10px;
+    border: 3px solid #FFFFFF;
+}
+
+#container_insert_line {
+    height: 10px;
+    background-color: #ca3e47;
+    margin-bottom: 20px;
+}
+
+#input_number {
+    width: 20%;
+}
+
+#input_model {
+    width: 50%;
+}
+
+#btn_insert{
+    width: 20%;
+    background: #1AAB8A;
+    color: #fff;
+    border: none;
+    position: relative;
+    height: 50px;
+    font-size: 1.2em;
+    padding: 0 2em;
+    cursor: pointer;
+    transition: 800ms ease all;
+    outline: none;
+}
+
+#btn_insert:hover{
+    background: #fff;
+    color: #1AAB8A;
+}
+
+#btn_insert:before,#btn_insert:after{
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 2px;
+    width: 0;
+    background: #1AAB8A;
+    transition: 400ms ease all;
+}
+
+#btn_insert:after{
+    right: inherit;
+    top: inherit;
+    left: 0;
+    bottom: 0;
+}
+
+#btn_insert:hover:before,#btn_insert:hover:after{
+    width: 100%;
+    transition: 800ms ease all;
+}
+
+#btn_delete{
+    background: #c73a51;
+    color: #fff;
+    border: none;
+    position: relative;
+    height: 50px;
+    font-size: 1.2em;
+    padding: 0 1.5em;
+    cursor: pointer;
+    transition: 800ms ease all;
+    outline: none;
+}
+
+#btn_delete:hover{
+    background: #fff;
+    color: #c73a51;
+}
+
+#btn_delete:before,#btn_delete:after{
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 2px;
+    width: 0;
+    background: #c73a51;
+    transition: 400ms ease all;
+}
+
+#btn_delete:after{
+    right: inherit;
+    top: inherit;
+    left: 0;
+    bottom: 0;
+}
+
+#btn_delete:hover:before,#btn_delete:hover:after{
+    width: 100%;
+    transition: 800ms ease all;
+}
+
+table.type10 {
+    width: 700px;
+    border-collapse: collapse;
+    text-align: center;
+    line-height: 1.5;
+    border-top: 1px solid #252c41;
+    border-bottom: 1px solid #252c41;
+    margin: 20px 10px;
+}
+
+table.type10 thead th {
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    color: #252c41;
+    background: #e7708d;
+    margin: 20px 10px;
+}
+
+table.type10 tbody th {
+    padding: 10px;
+}
+
+table.type10 td {
+    padding: 10px;
+    vertical-align: top;
+}
+
+table.type10 .even {
+    background: #fdf3f5;
+}
+
+#container_delete {
+    width: 700px;
+    height: 50px;
+}
