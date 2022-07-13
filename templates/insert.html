@@ -2,62 +2,128 @@
 <head>
     <meta charset="UTF-8">
     <title>YM-Insert</title>
-    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/base_style.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='css/insert_style.css')}}">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+        function Save_check() {
+            if ( document.getElementById('input_number').value == "" || document.getElementById('input_model').value == ""){
+                alert("데이터(순번, 검사항목)를 입력하세요.");
+                return false;
+            }
+            else {
+                var form = document.forms['frm'];
+                form.action = '/save';
+                form.submit();
+            }
+        };
+
+        function Delete_check() {
+            if ( document.getElementById('input_number').value == "" || document.getElementById('input_model').value == ""){
+                alert('삭제할 데이터를 감사항목에서 선택하세요.');
+                return false;
+            }
+            else {
+                if (confirm('순번이 재정렬됩니다.\n삭제하시겠습니까?')) {
+                    var form = document.forms['frm'];
+                    form.action = '/delete';
+                    form.submit();
+                }
+                else {
+                    return false;
+                }
+            }
+        };
+
+        document.addEventListener('keydown', function(event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+            };
+        }, true);
+    </script>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <script>
+                alert("{{messages[-1]}}")
+            </script>
+        {% endif %}
+    {% endwith %}
 </head>
 <body>
     <header>
-<!--        <center>-->
-<!--            <div id="header_content">연산메탈 AI Detector... [TEST UI]</div>-->
-            <nav id="header_nav">
-                  <ul>
-<!--                        <li><a href="dashboard">Dashboard</a></li>-->
-<!--                        <li><a href="">Result</a></li>-->
-                        <li class="active"><a href="insert">Insert</a></li>
-                  </ul>
-            </nav>
-<!--        </center>-->
+        <nav id="header_nav">
+            <ul>
+                <li class="active"><a href="insert">Insert</a></li>
+            </ul>
+        </nav>
     </header>
 
-<!--    <div id="container_line_start"><hr></div>-->
-    <center>
-        <div id="container_insert">
-            <div id="container_insert_line"></div>
-            <center>
-                <h3>[{{date}}] 검사 항목 추가</h3>
-            </center>
-            <center>
-                <form role="form" style="width:700px" action="/insert_insert" method="post">
-                    <input id="input_number" style="text-align:center" type="number" name="value_number"
-                           placeholder="순번" class="form-control" autocomplete="off" value={{last_Data}} readonly>
-                    <input id="input_model" type="text" name = "value_model"
-                           placeholder="검사 항목" class="form-control" autocomplete="off">
-                    <button id="btn_insert" type="submit" name ="insert" value="insert">추가</button>
-                </form>
-                <table class="type10">
-                    <tr>
-                        <th scope="cols">순번</th>
-                        <th scope="cols">검사 항목</th>
-                    </tr>
-                    {% for data in select_Data %}
-                    <tr>
-                        <td scope="row" style="width: 100px;">{{data.number}}</td>
-                        <td style="width: 500px;">{{data.model}}</td>
-                    </tr>
-                    {% endfor %}
+    <div id="main_container">
+        <div id="content_insert">
+            <div class="content_title">
+                <label class="title_text">Insert</label>
+            </div>
+
+            <form id="form_insert" role="form" name="frm" method="post">
+                <div id="insert_input">
+                    <input id="input_id" type="number" name="value_id" value="" readonly>
+                    <label>순번 : </label>
+                    <input id="input_number" type="number" name="value_number" placeholder="순번" class="form-control" autocomplete="off" value="{{last_Data}}" readonly>
+                    <label>검사 항목 : </label>
+                    <input id="input_model" type="text" name="value_model" placeholder="검사 항목" class="form-control" autocomplete="off">
+                </div>
+                <div id="insert_btn">
+                    <button id="btn_delete" type="submit" name ="delete" value="delete" onclick="return Delete_check();">삭제</button>
+                    <button id="btn_save" type="submit" name ="save" value="save" onclick="return Save_check();">저장</button>
+                    <button id="btn_new" type="submit" name ="new" value="new" onclick="javascript: form.action='/new';">추가(순번 생성)</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="content_table">
+            <div class="content_title">
+                <label class="title_text">[{{date}}] 검사 항목</label>
+            </div>
+                <table id="model_table" class="table_type">
+                    <thead>
+                        <tr>
+                            <th style="display: none"></th>
+                            <th scope="cols">순번</th>
+                            <th scope="cols">검사 항목</th>
+                        </tr>
+                    </thead>
+                    <tbody style="cursor:pointer">
+                        {% for data in select_Data %}
+                        <tr>
+                            <td style="display:none">{{data.id}}</td>
+                            <td scope="row" style="width: 10%;">{{data.number}}</td>
+                            <td style="width: 70%;">{{data.model}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
                 </table>
-                <div id="container_delete">
-                    <form role="form"  style="float:right" action="/insert_delete">
-                    <button id="btn_delete" type="submit" name ="delete">초기화</button>
+                <div id="content_clear">
+                    <form id="form_clear" role="form" action="/clear">
+                        <button id="btn_clear" type="submit" name="clear">초기화</button>
                     </form>
                 </div>
-            </center>
         </div>
-    </center>
-    <footer>
-        <center>
-            <div id="footer_content">copyrightⓒ 2022 All rights reserved by ADIA Lab. Inc.</div>
-        </center>
-    </footer>
+    </div>
+
+    <script>
+        $("#model_table tbody tr").click(function(){
+			var tr = $(this);
+			var td = tr.children();
+
+			var id = td.eq(0).text();
+			var no = td.eq(1).text();
+			var model = td.eq(2).text();
+
+            $("#input_id").val(id);
+			$("#input_number").val(no);
+			$("#input_model").val(model);
+		});
+    </script>
 </body>
